@@ -15,11 +15,11 @@
       Milou.Web.ClientResources
     </summary>
     <language>en-US</language>
-    <projectUrl>http://milou.se</projectUrl>
+    <projectUrl>https://github.com/milou-se/Milou.Web.ClientResources</projectUrl>
     <iconUrl>http://milou.se</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <licenseUrl>http://milou.se</licenseUrl>
-    <copyright>Copyright Milou Communication AB 2015-2017</copyright>
+    <licenseUrl>https://github.com/milou-se/Milou.Web.ClientResources/blob/master/LICENSE.txt</licenseUrl>
+    <copyright>Copyright Milou Communication AB 2015-2018</copyright>
     <dependencies>
         <group targetFramework="net45">
             <dependency id="Microsoft.Owin.StaticFiles" version="[3.1.0,4.0.0)" />
