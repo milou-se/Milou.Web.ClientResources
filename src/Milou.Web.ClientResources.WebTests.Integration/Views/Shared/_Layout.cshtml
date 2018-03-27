@@ -1,0 +1,70 @@
+﻿@using Milou.Web.ClientResources
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @{
+        string scriptTag = ClientReference.CreateScriptTag("Content/js/Custom.js");
+    }
+    @Html.Raw(scriptTag)
+
+    @{
+        string cssLinkHtmlElements = ClientReference.CreateCssLinkHtmlElements("Content/css/Custom.css");
+    }
+    @Html.Raw(cssLinkHtmlElements)
+
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+
+    <div style="border: 1px solid #7d7d7d; padding: 7px">
+        @scriptTag
+    </div>
+
+    <div style="border: 1px solid #7d7d7d; padding: 7px">
+        @cssLinkHtmlElements
+    </div>
+
+    <div style="border: 1px solid #7d7d7d; padding: 7px">
+        <a href="~/vstatic/@GlobalVersion.Current/content/test.html">Test.html</a>
+        <a href="~/vstatic/@GlobalVersion.Current/content/test.json">Test.json</a>
+        <a href="~/vstatic/@GlobalVersion.Current/content/test.txt">Test.txt</a>
+    </div>
+
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", false)
+</body>
+</html>

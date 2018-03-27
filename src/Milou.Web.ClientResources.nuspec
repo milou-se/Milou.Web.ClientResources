@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Milou.Web.ClientResources</id>
+    <version>0.1.0</version>
+    <title>Milou.Web.ClientResources</title>
+    <authors>Milou Communication AB</authors>
+    <owners></owners>
+    <description>
+      Milou.Web.ClientResources
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      Milou.Web.ClientResources
+    </summary>
+    <language>en-US</language>
+    <projectUrl>http://milou.se</projectUrl>
+    <iconUrl>http://milou.se</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <licenseUrl>http://milou.se</licenseUrl>
+    <copyright>Copyright Milou Communication AB 2015-2017</copyright>
+    <dependencies>
+        <group targetFramework="net45">
+            <dependency id="Microsoft.Owin.StaticFiles" version="[3.1.0,4.0.0)" />
+        </group>
+    </dependencies>
+    <references>
+
+    </references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="Milou.Web.ClientResources\bin\$configuration$\**\Milou.Web.ClientResources.*" target="lib\net45" exclude="*.vshost*;**\*.vshost*;*.trx;*.lastcodeanalysissucceeded;*.CodeAnalysisLog.xml;**\*.xml;**\roslyn\**\*.*;**\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.*;**\*.lastcodeanalysissucceeded;**\*.pdb" />
+  </files>
+</package>
