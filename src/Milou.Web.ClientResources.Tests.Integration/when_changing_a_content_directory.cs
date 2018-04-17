@@ -38,7 +38,8 @@ namespace Milou.Web.ClientResources.Tests.Integration
 
             GlobalVersion.Initialize(global_version_creator, UpdateMode.Allow);
 
-            new StaticFileWatcher(Console.WriteLine).Watch(temp_directory);
+            watcher = new StaticFileWatcher(Console.WriteLine);
+            watcher.Watch(temp_directory);
 
             old_global_id = GlobalVersion.Current;
         };
@@ -54,6 +55,8 @@ namespace Milou.Web.ClientResources.Tests.Integration
             Thread.Sleep(TimeSpan.FromMilliseconds(20));
 
             new_global_version = GlobalVersion.Current;
+
+            watcher?.Dispose();
         };
 
         private It should_not_be_empty = () => old_global_id.ShouldNotBeEmpty();
@@ -67,5 +70,7 @@ namespace Milou.Web.ClientResources.Tests.Integration
 
             new_global_version.ShouldNotEqual(old_global_id);
         };
+
+        private static StaticFileWatcher watcher;
     }
 }
