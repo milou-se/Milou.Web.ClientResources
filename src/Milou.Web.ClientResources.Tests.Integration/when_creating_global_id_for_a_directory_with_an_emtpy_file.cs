@@ -32,7 +32,7 @@ namespace Milou.Web.ClientResources.Tests.Integration
         {
             absolute_base_directory_path = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
-            test_file_path = Path.Combine(absolute_base_directory_path, string.Format("{0}.tmp", Guid.NewGuid()));
+            test_file_path = Path.Combine(absolute_base_directory_path, $"{Guid.NewGuid()}.tmp");
 
             Directory.CreateDirectory(absolute_base_directory_path);
 

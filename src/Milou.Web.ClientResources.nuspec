@@ -21,8 +21,8 @@
     <licenseUrl>https://github.com/milou-se/Milou.Web.ClientResources/blob/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright Milou Communication AB 2015-2018</copyright>
     <dependencies>
-        <group targetFramework="net45">
-            <dependency id="Microsoft.Owin.StaticFiles" version="[3.1.0,4.0.0)" />
+        <group targetFramework="net462">
+            <dependency id="Microsoft.Owin.StaticFiles" version="[4.0,5.0.0)" />
         </group>
     </dependencies>
     <references>
@@ -31,6 +31,6 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="Milou.Web.ClientResources\bin\$configuration$\**\Milou.Web.ClientResources.*" target="lib\net45" exclude="*.vshost*;**\*.vshost*;*.trx;*.lastcodeanalysissucceeded;*.CodeAnalysisLog.xml;**\*.xml;**\roslyn\**\*.*;**\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.*;**\*.lastcodeanalysissucceeded;**\*.pdb" />
+    <file src="Milou.Web.ClientResources\bin\$configuration$\**\Milou.Web.ClientResources.*" target="lib\net462" exclude="*.vshost*;**\*.vshost*;*.trx;*.lastcodeanalysissucceeded;*.CodeAnalysisLog.xml;**\*.xml;**\roslyn\**\*.*;**\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.*;**\*.lastcodeanalysissucceeded;**\*.pdb" />
   </files>
 </package>

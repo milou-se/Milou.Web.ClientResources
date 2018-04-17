@@ -1,7 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using Arbor.Aesculus.Core;
 
 namespace Milou.Web.ClientResources.Tests.Integration
@@ -10,30 +8,17 @@ namespace Milou.Web.ClientResources.Tests.Integration
     {
         public static string FindVcsRootPath()
         {
-            Assembly ncrunchAssembly = null;
             try
             {
-                ncrunchAssembly =
-                    AppDomain.CurrentDomain.Load("NCrunch.Framework");
+                string originalSolutionPath = NCrunch.Framework.NCrunchEnvironment.GetOriginalSolutionPath();
 
-                Type ncrunchType =
-                    ncrunchAssembly.GetTypes()
-                        .FirstOrDefault(
-                            type => type.Name.Equals("NCrunchEnvironment",
-                                StringComparison.InvariantCultureIgnoreCase));
-
-                if (ncrunchType != null)
+                if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
-                    MethodInfo method = ncrunchType.GetMethod("GetOriginalSolutionPath");
+                    DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
 
-                    if (method != null)
+                    if (parent != null)
                     {
-                        string originalSolutionPath = method.Invoke(null, null) as string;
-                        if (!string.IsNullOrWhiteSpace(originalSolutionPath))
-                        {
-                            DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
-                            return VcsPathHelper.FindVcsRootPath(parent.FullName);
-                        }
+                        return VcsPathHelper.FindVcsRootPath(parent.FullName);
                     }
                 }
             }
@@ -44,6 +29,7 @@ namespace Milou.Web.ClientResources.Tests.Integration
                     throw;
                 }
             }
+
             return VcsPathHelper.FindVcsRootPath();
         }
     }

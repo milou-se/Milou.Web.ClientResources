@@ -5,11 +5,12 @@ using JetBrains.Annotations;
 
 namespace Milou.Web.ClientResources
 {
-    public sealed class StaticFileWatcher
+    public sealed class StaticFileWatcher : IDisposable
     {
         private readonly Action<string> _onChanged;
         private readonly int _sleepTimeBeforeUpdateInMilliseconds;
         private readonly Action<string> _optionalLogger;
+        private FileSystemWatcher _fileSystemWatcher;
 
         public StaticFileWatcher(Action<string> optionalLogger = null, Action<string> onChanged = null, int sleepTimeBeforeUpdateInMilliseconds = 0)
         {
@@ -20,6 +21,8 @@ namespace Milou.Web.ClientResources
 
         public void Watch([NotNull] DirectoryInfo directoryInfo)
         {
+            DisposeWatcher();
+
             if (directoryInfo == null)
             {
                 throw new ArgumentNullException(nameof(directoryInfo));
@@ -30,21 +33,21 @@ namespace Milou.Web.ClientResources
                 throw new ArgumentException($"The directory with path '{directoryInfo.FullName}' does not exist");
             }
 
-            var fileSystemWatcher = new FileSystemWatcher(directoryInfo.FullName)
+            _fileSystemWatcher = new FileSystemWatcher(directoryInfo.FullName)
             {
                 NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
-                               | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Attributes
-                               | NotifyFilters.CreationTime | NotifyFilters.Security | NotifyFilters.Size,
+                                                        | NotifyFilters.FileName | NotifyFilters.DirectoryName | NotifyFilters.Attributes
+                                                        | NotifyFilters.CreationTime | NotifyFilters.Security | NotifyFilters.Size,
                 IncludeSubdirectories = true,
                 Filter = "*.*"
             };
 
-            fileSystemWatcher.Changed += FileSystemWatcherOnChanged;
-            fileSystemWatcher.Created += FileSystemWatcherOnCreated;
-            fileSystemWatcher.Deleted += FileSystemWatcherOnDeleted;
-            fileSystemWatcher.Renamed += FileSystemWatcherOnRenamed;
+            _fileSystemWatcher.Changed += FileSystemWatcherOnChanged;
+            _fileSystemWatcher.Created += FileSystemWatcherOnCreated;
+            _fileSystemWatcher.Deleted += FileSystemWatcherOnDeleted;
+            _fileSystemWatcher.Renamed += FileSystemWatcherOnRenamed;
 
-            fileSystemWatcher.EnableRaisingEvents = true;
+            _fileSystemWatcher.EnableRaisingEvents = true;
         }
 
         private void FileSystemWatcherOnRenamed(object sender, RenamedEventArgs renamedEventArgs)
@@ -85,6 +88,26 @@ namespace Milou.Web.ClientResources
             {
                 Thread.Sleep(_sleepTimeBeforeUpdateInMilliseconds);
             }
+        }
+
+        public void Dispose()
+        {
+            DisposeWatcher();
+        }
+
+        private void DisposeWatcher()
+        {
+            if (_fileSystemWatcher != null)
+            {
+                _fileSystemWatcher.EnableRaisingEvents = false;
+                _fileSystemWatcher.Changed -= FileSystemWatcherOnChanged;
+                _fileSystemWatcher.Created -= FileSystemWatcherOnCreated;
+                _fileSystemWatcher.Deleted -= FileSystemWatcherOnDeleted;
+                _fileSystemWatcher.Renamed -= FileSystemWatcherOnRenamed;
+                _fileSystemWatcher.Dispose();
+            }
+
+            _fileSystemWatcher = null;
         }
     }
 }
