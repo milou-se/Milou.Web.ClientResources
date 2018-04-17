@@ -21,3 +21,16 @@ The path is based on a virtual directory containing the hash sum. When the file 
 ## More examples
 
 For more examples see Milou.Web.ClientResources.WebTests.Integration project.
+
+# Release notes
+
+## 4.0
+
+* Upgraded to OWIN 4.0
+* Upgraded to .NET Framework 4.6.2
+* Upgraded NuGet packages and removed some unused packages
+* Updated Sample project
+
+## 3.0.5
+
+Initial release
