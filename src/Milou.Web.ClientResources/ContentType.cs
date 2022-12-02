@@ -19,6 +19,8 @@ namespace Milou.Web.ClientResources
 
         public static readonly ContentType JavaScript = new ContentType("JavaScript", "application/javascript", ".js");
 
+        public static readonly ContentType JavaScriptModule = new ContentType("JavaScript", "module", ".js");
+
         public static readonly ContentType Pdf = new ContentType("PDF", "application/pdf", ".pdf");
 
         public static readonly ContentType PlainText = new ContentType("Plaintext", "text/plain", ".txt");

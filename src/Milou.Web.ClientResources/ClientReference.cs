@@ -211,6 +211,70 @@ namespace Milou.Web.ClientResources
             return resultHtmlElement;
         }
 
+        public static string CreateModuleScriptTag(
+            string relativeFilePath,
+            string absoluteBaseDirectory = null,
+            string virtualRootPathForStaticFiles = "vstatic",
+            bool normalizeHrefs = true,
+            string applicationRootPath = "")
+        {
+            if (string.IsNullOrWhiteSpace(relativeFilePath))
+            {
+                throw new ArgumentNullException(nameof(relativeFilePath));
+            }
+
+            if (string.IsNullOrWhiteSpace(virtualRootPathForStaticFiles))
+            {
+                throw new ArgumentNullException(nameof(virtualRootPathForStaticFiles));
+            }
+
+            string version = GlobalVersion.Current;
+
+            string usedBaseDirectory = string.IsNullOrWhiteSpace(absoluteBaseDirectory)
+                ? AppDomain.CurrentDomain.BaseDirectory
+                : absoluteBaseDirectory;
+
+            string absolutePath = Path.Combine(usedBaseDirectory, relativeFilePath);
+
+            Console.WriteLine(absolutePath);
+
+            var fileInfo = new FileInfo(absolutePath);
+
+            DirectoryInfo directory = fileInfo.Directory;
+
+            if (directory == null)
+            {
+                throw new InvalidOperationException($"The directory for '{relativeFilePath}' is null");
+            }
+
+            if (!directory.Exists)
+            {
+                throw new InvalidOperationException($"The directory '{directory.FullName}' does not exist");
+            }
+
+            string path = $"{virtualRootPathForStaticFiles}/{version}/{relativeFilePath}".Replace("//", "/");
+
+            string rootPath =
+                (string.IsNullOrWhiteSpace(applicationRootPath) ? "/" : $"{applicationRootPath}/").Replace("//", "/");
+
+            string html =
+                $"<script type=\"{ContentType.JavaScriptModule.RegisteredContentType}\" src=\"{rootPath}{path}\"></script>";
+
+            string resultHtmlElement;
+            if (normalizeHrefs)
+            {
+                string normalized = html.ToLowerInvariant();
+
+                resultHtmlElement = normalized;
+            }
+            else
+            {
+                resultHtmlElement = html;
+            }
+
+            return resultHtmlElement;
+        }
+
         private static string CreateFullRelativePath(string relativeDirectory, FileInfo file)
         {
             return $"{relativeDirectory}/{file.Name}";

@@ -1,5 +1,6 @@
 ﻿@using Milou.Web.ClientResources
 @{
+    string moduleScriptTag = ClientReference.CreateModuleScriptTag("Content/js/Custom.js");
     string scriptTag = ClientReference.CreateScriptTag("Content/js/Custom.js");
     string cssLinkHtmlElements = ClientReference.CreateCssLinkHtmlElements("Content/css/Custom.css");
 }
@@ -12,6 +13,16 @@
 </div>
 
 <div class="row">
+    <div>
+        <h2>Example of module script tag</h2>
+        <div>
+            @@ClientReference.CreateModuleScriptTag(&quot;Content/js/Custom.js&quot;)
+        </div>
+
+        <div style="border: 1px solid #7d7d7d; padding: 7px">
+            @moduleScriptTag
+        </div>
+    </div>
     <div>
         <h2>Example of script tag</h2>
 
